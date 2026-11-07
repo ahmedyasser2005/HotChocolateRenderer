@@ -294,6 +294,17 @@ void HCR::Graphics::Start( HWND hwnd, uint32_t width, uint32_t height ) noexcept
 		d3dCommandList->CopyResource( d3dVertexBuffer.Get(), d3dVertexUploadBuffer.Get() );
 		d3dCommandList->CopyResource( d3dIndexBuffer.Get(), d3dIndexUploadBuffer.Get() );
 
+		const CD3DX12_RESOURCE_BARRIER barriers[2] = {
+			CD3DX12_RESOURCE_BARRIER::Transition(
+				d3dVertexBuffer.Get(), D3D12_RESOURCE_STATE_COPY_DEST, D3D12_RESOURCE_STATE_VERTEX_AND_CONSTANT_BUFFER
+			),
+			CD3DX12_RESOURCE_BARRIER::Transition(
+				d3dIndexBuffer.Get(), D3D12_RESOURCE_STATE_COPY_DEST, D3D12_RESOURCE_STATE_INDEX_BUFFER
+			)
+		};
+
+		d3dCommandList->ResourceBarrier( std::size( barriers ), barriers );
+
 		hr = d3dCommandList->Close();
 		assert( SUCCEEDED( hr ) && "Failed to close the command list" );
 		ID3D12CommandList* const commandLists[] = { d3dCommandList.Get() };
