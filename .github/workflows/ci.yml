@@ -36,6 +36,9 @@ jobs:
         uses: Jimver/cuda-toolkit@v0.2.36
         with:
           cuda: "13.3.0"
+          sub-packages: '["nvcc", "visual_studio_integration"]'
+          method: network
+          use-github-cache: true
 
       - name: Setup MSBuild
         uses: microsoft/setup-msbuild@v3
