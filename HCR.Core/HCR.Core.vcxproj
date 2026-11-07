@@ -50,6 +50,7 @@
       <PreprocessorDefinitions>_DEBUG;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <PrecompiledHeader>Use</PrecompiledHeader>
+      <AdditionalIncludeDirectories>$(SolutionDir)HCR.Renderer\include;$(SolutionDir)HCR.CUDA\include;$(SolutionDir)HCR.Graphics.Interop\include;$(SolutionDir)HCR.Graphics.D3D12\include;$(SolutionDir)HCR.Platform\include;$(SolutionDir)HCR.Core\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>
@@ -67,6 +68,7 @@
       <PreprocessorDefinitions>NDEBUG;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <PrecompiledHeader>Use</PrecompiledHeader>
+      <AdditionalIncludeDirectories>$(SolutionDir)HCR.Renderer\include;$(SolutionDir)HCR.CUDA\include;$(SolutionDir)HCR.Graphics.Interop\include;$(SolutionDir)HCR.Graphics.D3D12\include;$(SolutionDir)HCR.Platform\include;$(SolutionDir)HCR.Core\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>
@@ -78,11 +80,13 @@
     </Manifest>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClInclude Include="include\HCR\Core\Core.hpp" />
+    <ClInclude Include="include\HCR\Core\Win32API.hpp" />
+    <ClInclude Include="include\HCR\Core\Logger.hpp" />
     <ClInclude Include="src\pch.hpp" />
+    <ClInclude Include="include\HCR\Core\Timer.hpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="src\Core.cpp" />
+    <ClCompile Include="src\Logger.cpp" />
     <ClCompile Include="src\pch.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Create</PrecompiledHeader>
