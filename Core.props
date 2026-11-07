@@ -5,11 +5,11 @@
   <PropertyGroup>
     <CodeAnalysisRuleSet>..\Core.ruleset</CodeAnalysisRuleSet>
     <RunCodeAnalysis>true</RunCodeAnalysis>
-    <IncludePath>$(ProjectDir)include;$(VC_IncludePath);$(WindowsSDK_IncludePath);</IncludePath>
-    <ExternalIncludePath>$(ProjectDir)external;$(VC_IncludePath);$(WindowsSDK_IncludePath);</ExternalIncludePath>
+    <IncludePath>$(SolutionDir)HCR.Core\include;$(ProjectDir)include\HCR;$(ProjectDir)src;$(VC_IncludePath);$(WindowsSDK_IncludePath)</IncludePath>
     <SourcePath>$(ProjectDir)src;$(VC_SourcePath);</SourcePath>
     <OutDir>$(SolutionDir)build\$(Configuration)-$(Platform)\</OutDir>
     <IntDir>$(ProjectDir)build-int\$(Configuration)-$(Platform)\</IntDir>
+    <ExternalIncludePath>$(SolutionDir)vendor\DirectX-Headers\include;$(ExternalIncludePath)</ExternalIncludePath>
   </PropertyGroup>
   <ItemDefinitionGroup>
     <ClCompile>
@@ -20,14 +20,18 @@
     <ClCompile>
       <LanguageStandard_C>stdclatest</LanguageStandard_C>
       <FloatingPointModel>Fast</FloatingPointModel>
-      <WarningLevel>EnableAllWarnings</WarningLevel>
+      <WarningLevel>Level4</WarningLevel>
       <TreatWarningAsError>true</TreatWarningAsError>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
       <SDLCheck>true</SDLCheck>
       <PrecompiledHeaderFile>pch.hpp</PrecompiledHeaderFile>
       <ExternalWarningLevel>TurnOffAllWarnings</ExternalWarningLevel>
       <DisableAnalyzeExternal>true</DisableAnalyzeExternal>
+      <PrecompiledHeader>Use</PrecompiledHeader>
     </ClCompile>
+    <FxCompile>
+      <ShaderModel>5.1</ShaderModel>
+    </FxCompile>
   </ItemDefinitionGroup>
   <ItemGroup />
 </Project>
