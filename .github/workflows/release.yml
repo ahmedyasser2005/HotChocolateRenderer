@@ -25,14 +25,14 @@ jobs:
         uses: actions/cache@v6.1.0
         with:
           path: C:\Program Files\NVIDIA GPU Computing Toolkit\CUDA\v13.3
-          key: cuda-13.3-nvcc-cudart-vsint-${{ runner.os }}
+          key: cuda-13.3-nvcc-cudart-crt-nvvm-nvptx-vsint-${{ runner.os }}
 
       - name: Install CUDA Toolkit (Cache Miss)
         if: steps.cuda-cache.outputs.cache-hit != 'true'
         uses: Jimver/cuda-toolkit@v0.2.36
         with:
           cuda: "13.3.0"
-          sub-packages: '["nvcc", "cudart", "visual_studio_integration"]'
+          sub-packages: '["nvcc", "cudart", "crt", "nvvm", "nvptxcompiler", "visual_studio_integration"]'
           method: local
           use-github-cache: true
 
