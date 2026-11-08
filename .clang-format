@@ -1,0 +1,42 @@
+BasedOnStyle: LLVM
+BreakBeforeBraces: Allman
+
+# Tabs, width 4, no line wrapping
+UseTab: ForContinuationAndIndentation
+IndentWidth: 4
+TabWidth: 4
+ColumnLimit: 0
+LineEnding: CRLF
+
+# Layout
+AccessModifierOffset: -4
+NamespaceIndentation: All
+IndentPPDirectives: BeforeHash
+AlignAfterOpenBracket: BlockIndent
+AlignConsecutiveDeclarations:
+  Enabled: false
+  # AlignFunctionDeclarations: false
+AllowShortFunctionsOnASingleLine: Inline
+AllowShortCaseLabelsOnASingleLine: true
+AlignConsecutiveShortCaseStatements:
+  Enabled: true
+AllowShortEnumsOnASingleLine: false
+BreakConstructorInitializers: BeforeComma
+BreakInheritanceList: BeforeComma
+
+# Spacing
+PointerAlignment: Left
+SpaceBeforeParens: Never
+Cpp11BracedListStyle: false
+SpacesInParens: Custom
+SpacesInParensOptions:
+  InConditionalStatements: true
+  Other: true
+SpacesBeforeTrailingComments: 2
+MaxEmptyLinesToKeep: 2
+ShortNamespaceLines: 0
+
+# Don't reorder things
+SortIncludes:
+  Enabled: false
+SortUsingDeclarations: Never
