@@ -30,19 +30,19 @@ namespace HCR
 	private:
 		Logger() noexcept = default;
 		~Logger() noexcept = default;
-
 	};
 
 	inline Logger& g_logger = Logger::Get();
 
-#ifdef _DEBUG
-#define LINFO(message) g_logger.LogMessage( LogLevel::Info, message )
-#define LWARN(message) g_logger.LogMessage( LogLevel::Warn, message )
-#define LERROR(message) g_logger.LogMessage( LogLevel::Error, message )
-#else
-#define LINFO(message) 
-#define LWARN(message) 
-#define LERROR(message) 
-#endif
 
-} // namespace HCR
+}  // namespace HCR
+
+#ifdef _DEBUG
+	#define LINFO( message ) ::HCR::g_logger.LogMessage( ::HCR::LogLevel::Info, message )
+	#define LWARN( message ) ::HCR::g_logger.LogMessage( ::HCR::LogLevel::Warn, message )
+	#define LERROR( message ) ::HCR::g_logger.LogMessage( ::HCR::LogLevel::Error, message )
+#else
+	#define LINFO( message )
+	#define LWARN( message )
+	#define LERROR( message )
+#endif
