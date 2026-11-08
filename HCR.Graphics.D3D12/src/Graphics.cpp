@@ -140,9 +140,7 @@ void HCR::Graphics::Start( HWND hwnd, uint32_t width, uint32_t height ) noexcept
 	constexpr D3D12_DEPTH_STENCIL_VIEW_DESC dsvd{
 		.Format = DXGI_FORMAT::DXGI_FORMAT_D32_FLOAT,
 		.ViewDimension = D3D12_DSV_DIMENSION_TEXTURE2D,
-		.Texture2D = {
-			.MipSlice = 0u
-		},
+		.Texture2D = { .MipSlice = 0u },
 	};
 	dsvHandle = { d3dDSVDescHeap->GetCPUDescriptorHandleForHeapStart() };
 	d3dDevice->CreateDepthStencilView( d3dDepthBuffer.Get(), &dsvd, dsvHandle );
@@ -167,7 +165,7 @@ void HCR::Graphics::Start( HWND hwnd, uint32_t width, uint32_t height ) noexcept
 
 #pragma region Create Fence Signaling Event
 	fenceEvent = CreateEventW( nullptr, FALSE, FALSE, nullptr );
-	assert( (fenceEvent != nullptr) && "Failed to create a fence event" );
+	assert( ( fenceEvent != nullptr ) && "Failed to create a fence event" );
 #pragma endregion
 
 	//////////// Rendering ////////////
@@ -179,15 +177,16 @@ void HCR::Graphics::Start( HWND hwnd, uint32_t width, uint32_t height ) noexcept
 		XMFLOAT3 color;
 	};
 
+	// clang-format off
 	constexpr std::array<Vertex, 8> vertices{
-		Vertex{ XMFLOAT3{ -0.5f, -0.5f, -0.5f }, XMFLOAT3{ 0.15f, 0.15f, 0.20f } }, // Dark Slate
-		Vertex{ XMFLOAT3{ -0.5f,  0.5f, -0.5f }, XMFLOAT3{ 0.20f, 0.80f, 0.60f } }, // Emerald Green
-		Vertex{ XMFLOAT3{ 0.5f,  0.5f, -0.5f }, XMFLOAT3{ 0.95f, 0.75f, 0.30f } }, // Warm Gold
-		Vertex{ XMFLOAT3{ 0.5f, -0.5f, -0.5f }, XMFLOAT3{ 0.90f, 0.35f, 0.35f } }, // Coral Red
-		Vertex{ XMFLOAT3{ -0.5f, -0.5f,  0.5f }, XMFLOAT3{ 0.35f, 0.55f, 0.90f } }, // Soft Blue
-		Vertex{ XMFLOAT3{ -0.5f,  0.5f,  0.5f }, XMFLOAT3{ 0.40f, 0.85f, 0.90f } }, // Soft Cyan
-		Vertex{ XMFLOAT3{ 0.5f,  0.5f,  0.5f }, XMFLOAT3{ 0.95f, 0.95f, 0.95f } }, // Bright Off-White
-		Vertex{ XMFLOAT3{ 0.5f, -0.5f,  0.5f }, XMFLOAT3{ 0.80f, 0.40f, 0.80f } }, // Lavender / Purple
+		Vertex{ XMFLOAT3{ -0.5f, -0.5f, -0.5f }, XMFLOAT3{ 0.15f, 0.15f, 0.20f } },  // Dark Slate
+		Vertex{ XMFLOAT3{ -0.5f,  0.5f, -0.5f }, XMFLOAT3{ 0.20f, 0.80f, 0.60f } },  // Emerald Green
+		Vertex{ XMFLOAT3{  0.5f,  0.5f, -0.5f }, XMFLOAT3{ 0.95f, 0.75f, 0.30f } },  // Warm Gold
+		Vertex{ XMFLOAT3{  0.5f, -0.5f, -0.5f }, XMFLOAT3{ 0.90f, 0.35f, 0.35f } },  // Coral Red
+		Vertex{ XMFLOAT3{ -0.5f, -0.5f,  0.5f }, XMFLOAT3{ 0.35f, 0.55f, 0.90f } },  // Soft Blue
+		Vertex{ XMFLOAT3{ -0.5f,  0.5f,  0.5f }, XMFLOAT3{ 0.40f, 0.85f, 0.90f } },  // Soft Cyan
+		Vertex{ XMFLOAT3{  0.5f,  0.5f,  0.5f }, XMFLOAT3{ 0.95f, 0.95f, 0.95f } },  // Bright Off-White
+		Vertex{ XMFLOAT3{  0.5f, -0.5f,  0.5f }, XMFLOAT3{ 0.80f, 0.40f, 0.80f } },  // Lavender / Purple
 	};
 	constexpr std::array<uint32_t, 36> indices{
 		0, 1, 2,   0, 2, 3,
@@ -197,20 +196,16 @@ void HCR::Graphics::Start( HWND hwnd, uint32_t width, uint32_t height ) noexcept
 		1, 5, 6,   1, 6, 2,
 		4, 0, 3,   4, 3, 7,
 	};
+	// clang-format on
 
-	nVertices = static_cast<UINT>(vertices.size());
-	nIndices = static_cast<UINT>(indices.size());
+	nVertices = static_cast<UINT>( vertices.size() );
+	nIndices = static_cast<UINT>( indices.size() );
 #pragma endregion
 
 #pragma region Create a Vertex Buffer Resource
 	const CD3DX12_HEAP_PROPERTIES hpd1{ D3D12_HEAP_TYPE_DEFAULT };
 	const auto rd1{ CD3DX12_RESOURCE_DESC::Buffer( sizeof( vertices ) ) };
-	hr = d3dDevice->CreateCommittedResource( &hpd1,
-											 D3D12_HEAP_FLAG_NONE,
-											 &rd1,
-											 D3D12_RESOURCE_STATE_COPY_DEST,
-											 nullptr,
-											 IID_PPV_ARGS( &d3dVertexBuffer ) );
+	hr = d3dDevice->CreateCommittedResource( &hpd1, D3D12_HEAP_FLAG_NONE, &rd1, D3D12_RESOURCE_STATE_COPY_DEST, nullptr, IID_PPV_ARGS( &d3dVertexBuffer ) );
 	assert( SUCCEEDED( hr ) && "Failed to create a resource" );
 #pragma endregion
 
@@ -219,12 +214,7 @@ void HCR::Graphics::Start( HWND hwnd, uint32_t width, uint32_t height ) noexcept
 	{
 		const CD3DX12_HEAP_PROPERTIES hpd2{ D3D12_HEAP_TYPE_UPLOAD };
 		const auto rd2{ CD3DX12_RESOURCE_DESC::Buffer( sizeof( vertices ) ) };
-		hr = d3dDevice->CreateCommittedResource( &hpd2,
-												 D3D12_HEAP_FLAG_NONE,
-												 &rd2,
-												 D3D12_RESOURCE_STATE_GENERIC_READ,
-												 nullptr,
-												 IID_PPV_ARGS( &d3dVertexUploadBuffer ) );
+		hr = d3dDevice->CreateCommittedResource( &hpd2, D3D12_HEAP_FLAG_NONE, &rd2, D3D12_RESOURCE_STATE_GENERIC_READ, nullptr, IID_PPV_ARGS( &d3dVertexUploadBuffer ) );
 		assert( SUCCEEDED( hr ) && "Failed to create a resource" );
 	}
 #pragma endregion
@@ -232,12 +222,7 @@ void HCR::Graphics::Start( HWND hwnd, uint32_t width, uint32_t height ) noexcept
 #pragma region Create a Index Buffer Resource
 	CD3DX12_HEAP_PROPERTIES hpd3{ D3D12_HEAP_TYPE_DEFAULT };
 	const auto rd3{ CD3DX12_RESOURCE_DESC::Buffer( sizeof( indices ) ) };
-	hr = d3dDevice->CreateCommittedResource( &hpd3,
-										D3D12_HEAP_FLAG_NONE,
-										&rd3,
-										D3D12_RESOURCE_STATE_COPY_DEST,
-										nullptr,
-										IID_PPV_ARGS( &d3dIndexBuffer ) );
+	hr = d3dDevice->CreateCommittedResource( &hpd3, D3D12_HEAP_FLAG_NONE, &rd3, D3D12_RESOURCE_STATE_COPY_DEST, nullptr, IID_PPV_ARGS( &d3dIndexBuffer ) );
 	assert( SUCCEEDED( hr ) && "Failed to create a resource" );
 #pragma endregion
 
@@ -246,25 +231,20 @@ void HCR::Graphics::Start( HWND hwnd, uint32_t width, uint32_t height ) noexcept
 	{
 		CD3DX12_HEAP_PROPERTIES hpd4{ D3D12_HEAP_TYPE_UPLOAD };
 		const auto rd4{ CD3DX12_RESOURCE_DESC::Buffer( sizeof( indices ) ) };
-		hr = d3dDevice->CreateCommittedResource( &hpd4,
-											D3D12_HEAP_FLAG_NONE,
-											&rd4,
-											D3D12_RESOURCE_STATE_GENERIC_READ,
-											nullptr,
-											IID_PPV_ARGS( &d3dIndexUploadBuffer ) );
+		hr = d3dDevice->CreateCommittedResource( &hpd4, D3D12_HEAP_FLAG_NONE, &rd4, D3D12_RESOURCE_STATE_GENERIC_READ, nullptr, IID_PPV_ARGS( &d3dIndexUploadBuffer ) );
 		assert( SUCCEEDED( hr ) && "Failed to create a resource" );
 	}
 #pragma endregion
 
 #pragma region Upload Vertex & Index Data
 	Vertex* mappedVertexData = nullptr;
-	hr = d3dVertexUploadBuffer->Map( 0u, nullptr, reinterpret_cast<void**>(&mappedVertexData) );
+	hr = d3dVertexUploadBuffer->Map( 0u, nullptr, reinterpret_cast<void**>( &mappedVertexData ) );
 	assert( SUCCEEDED( hr ) && "Failed to map the vertex upload buffer" );
 	rn::copy( vertices, mappedVertexData );
 	d3dVertexUploadBuffer->Unmap( 0u, nullptr );
 
 	uint32_t* mappedIndexData = nullptr;
-	hr = d3dIndexUploadBuffer->Map( 0u, nullptr, reinterpret_cast<void**>(&mappedIndexData) );
+	hr = d3dIndexUploadBuffer->Map( 0u, nullptr, reinterpret_cast<void**>( &mappedIndexData ) );
 	assert( SUCCEEDED( hr ) && "Failed to map the index upload buffer" );
 	rn::copy( indices, mappedIndexData );
 	d3dIndexUploadBuffer->Unmap( 0u, nullptr );
@@ -273,13 +253,13 @@ void HCR::Graphics::Start( HWND hwnd, uint32_t width, uint32_t height ) noexcept
 #pragma region Make Vertex Buffer View
 	vertexBufferView = {
 		.BufferLocation = d3dVertexBuffer->GetGPUVirtualAddress(),
-		.SizeInBytes = static_cast<UINT>(nVertices * sizeof( Vertex )),
+		.SizeInBytes = static_cast<UINT>( nVertices * sizeof( Vertex ) ),
 		.StrideInBytes = sizeof( Vertex ),
 	};
 
 	indexBufferView = {
 		.BufferLocation = d3dIndexBuffer->GetGPUVirtualAddress(),
-		.SizeInBytes = static_cast<UINT>(nIndices * sizeof( uint32_t )),
+		.SizeInBytes = static_cast<UINT>( nIndices * sizeof( uint32_t ) ),
 		.Format = DXGI_FORMAT_R32_UINT,
 	};
 #pragma endregion
@@ -308,7 +288,7 @@ void HCR::Graphics::Start( HWND hwnd, uint32_t width, uint32_t height ) noexcept
 		hr = d3dCommandList->Close();
 		assert( SUCCEEDED( hr ) && "Failed to close the command list" );
 		ID3D12CommandList* const commandLists[] = { d3dCommandList.Get() };
-		d3dCommandQueue->ExecuteCommandLists( static_cast<UINT>(std::size( commandLists )), commandLists );
+		d3dCommandQueue->ExecuteCommandLists( static_cast<UINT>( std::size( commandLists ) ), commandLists );
 	}
 #pragma endregion
 
@@ -335,7 +315,7 @@ void HCR::Graphics::Start( HWND hwnd, uint32_t width, uint32_t height ) noexcept
 	};
 
 	CD3DX12_ROOT_SIGNATURE_DESC rsd{};
-	rsd.Init( static_cast<UINT>(std::size( rootParams )), rootParams, 0u, nullptr, rsflags );
+	rsd.Init( static_cast<UINT>( std::size( rootParams ) ), rootParams, 0u, nullptr, rsflags );
 
 	ComPtr<ID3DBlob> d3dSignatureBlob;
 	ComPtr<ID3DBlob> d3dErrorBlob;
@@ -343,7 +323,7 @@ void HCR::Graphics::Start( HWND hwnd, uint32_t width, uint32_t height ) noexcept
 	hr = D3D12SerializeRootSignature( &rsd, D3D_ROOT_SIGNATURE_VERSION_1, &d3dSignatureBlob, &d3dErrorBlob );
 	if( FAILED( hr ) )
 	{
-		[[maybe_unused]] auto errorText = static_cast<const char*>(d3dErrorBlob->GetBufferPointer());
+		[[maybe_unused]] auto errorText = static_cast<const char*>( d3dErrorBlob->GetBufferPointer() );
 		LERROR( errorText );
 		assert( SUCCEEDED( hr ) && "Failed to serialize root signature" );
 	}
@@ -421,27 +401,23 @@ void HCR::Graphics::Render() noexcept
 	HRESULT hr = S_OK;
 
 	UINT curBackBufferIndex = dxgiSwapChain->GetCurrentBackBufferIndex();
-	auto& curBackBuffer = backBuffers[static_cast<INT>(curBackBufferIndex)];
+	auto& curBackBuffer = backBuffers[static_cast<INT>( curBackBufferIndex )];
 
 	hr = d3dCommandAllocator->Reset();
 	assert( SUCCEEDED( hr ) && "Failed to reset the command allocator" );
 	hr = d3dCommandList->Reset( d3dCommandAllocator.Get(), nullptr );
 	assert( SUCCEEDED( hr ) && "Failed to reset the command list" );
 
-	const auto barrier1 = CD3DX12_RESOURCE_BARRIER::Transition( curBackBuffer.Get(),
-																D3D12_RESOURCE_STATE_PRESENT,
-																D3D12_RESOURCE_STATE_RENDER_TARGET );
+	const auto barrier1 = CD3DX12_RESOURCE_BARRIER::Transition( curBackBuffer.Get(), D3D12_RESOURCE_STATE_PRESENT, D3D12_RESOURCE_STATE_RENDER_TARGET );
 	d3dCommandList->ResourceBarrier( 1u, &barrier1 );
 
-	const auto ms = static_cast<float>(
-		std::chrono::duration_cast<std::chrono::milliseconds>(
-			std::chrono::high_resolution_clock::now().time_since_epoch()).count()) * 0.001f;
+	const auto ms = static_cast<float>( std::chrono::duration_cast<std::chrono::milliseconds>( std::chrono::high_resolution_clock::now().time_since_epoch() ).count() ) * 0.001f;
 
 	const FLOAT clearColor[] = { std::sinf( ms ), 0.0f, 0.0f, 1.0f };
 
 	const CD3DX12_CPU_DESCRIPTOR_HANDLE rtv{
 		d3dRTVDescHeap->GetCPUDescriptorHandleForHeapStart(),
-		static_cast<INT>(curBackBufferIndex), d3dRTVDescHeapSize
+		static_cast<INT>( curBackBufferIndex ), d3dRTVDescHeapSize
 	};
 
 	d3dCommandList->ClearRenderTargetView( rtv, clearColor, 0u, nullptr );
@@ -455,7 +431,7 @@ void HCR::Graphics::Render() noexcept
 	d3dCommandList->IASetIndexBuffer( &indexBufferView );
 
 	d3dScissorRect = CD3DX12_RECT{ 0l, 0l, LONG_MAX, LONG_MAX };
-	d3dViewport = CD3DX12_VIEWPORT{ 0.0f, 0.0f, static_cast<FLOAT>(g_window.GetWidth()), static_cast<FLOAT>(g_window.GetHeight()) };
+	d3dViewport = CD3DX12_VIEWPORT{ 0.0f, 0.0f, static_cast<FLOAT>( g_window.GetWidth() ), static_cast<FLOAT>( g_window.GetHeight() ) };
 
 	d3dCommandList->RSSetScissorRects( 1u, &d3dScissorRect );
 	d3dCommandList->RSSetViewports( 1u, &d3dViewport );
@@ -465,14 +441,14 @@ void HCR::Graphics::Render() noexcept
 #pragma region Constant Buffer Init
 	{
 		// World
-		const auto world = XMMatrixRotationZ( ms ) * XMMatrixRotationY( ms ) * XMMatrixRotationX( ms );//* XMMatrixTranslation()
+		const auto world = XMMatrixRotationZ( ms ) * XMMatrixRotationY( ms ) * XMMatrixRotationX( ms );  //* XMMatrixTranslation()
 		// View
 		const auto eyePos = XMVectorSet( 0.0f, 0.0f, -2.0f, 1.0f );
 		const auto focusPos = XMVectorSet( 0.0f, 0.0f, 0.0f, 1.0f );
 		const auto upDir = XMVectorSet( 0.0f, 1.0f, 0.0f, 0.0f );
 		const auto view = XMMatrixLookAtLH( eyePos, focusPos, upDir );
 		// Projection
-		const auto aspectRatio = static_cast<float>(g_window.GetWidth()) / static_cast<float>(g_window.GetHeight());
+		const auto aspectRatio = static_cast<float>( g_window.GetWidth() ) / static_cast<float>( g_window.GetHeight() );
 		const auto proj = XMMatrixPerspectiveFovLH( XMConvertToRadians( 60.0f ), aspectRatio, 0.1f, 100.0f );
 		// WVP
 		const auto wvp = XMMatrixTranspose( XMMatrixMultiply( world, XMMatrixMultiply( view, proj ) ) );
@@ -486,14 +462,14 @@ void HCR::Graphics::Render() noexcept
 #pragma region Constant Buffer Init
 	{
 		// World
-		const auto world = XMMatrixScaling( 0.5f, 0.5f, 0.5f ) * (XMMatrixRotationZ( ms * 2 ) * XMMatrixRotationY( ms * 2 ) * XMMatrixRotationX( ms * 2 )) * XMMatrixTranslation( -1.0f, 0.0f, 0.0f );
+		const auto world = XMMatrixScaling( 0.5f, 0.5f, 0.5f ) * ( XMMatrixRotationZ( ms * 2 ) * XMMatrixRotationY( ms * 2 ) * XMMatrixRotationX( ms * 2 ) ) * XMMatrixTranslation( -1.0f, 0.0f, 0.0f );
 		// View
 		const auto eyePos = XMVectorSet( 0.0f, 0.0f, -2.0f, 1.0f );
 		const auto focusPos = XMVectorSet( 0.0f, 0.0f, 0.0f, 1.0f );
 		const auto upDir = XMVectorSet( 0.0f, 1.0f, 0.0f, 0.0f );
 		const auto view = XMMatrixLookAtLH( eyePos, focusPos, upDir );
 		// Projection
-		const auto aspectRatio = static_cast<float>(g_window.GetWidth()) / static_cast<float>(g_window.GetHeight());
+		const auto aspectRatio = static_cast<float>( g_window.GetWidth() ) / static_cast<float>( g_window.GetHeight() );
 		const auto proj = XMMatrixPerspectiveFovLH( XMConvertToRadians( 60.0f ), aspectRatio, 0.1f, 100.0f );
 		// WVP
 		const auto wvp = XMMatrixTranspose( XMMatrixMultiply( world, XMMatrixMultiply( view, proj ) ) );
@@ -527,5 +503,4 @@ void HCR::Graphics::Render() noexcept
 	[[maybe_unused]] const bool success = WaitForSingleObject( fenceEvent, INFINITE ) != WAIT_FAILED;
 	assert( success && "Failed to wait for fence event" );
 #pragma endregion
-
 }

@@ -1,7 +1,7 @@
 #pragma once
 
-#include <cstdint>
 #include <bitset>
+#include <cstdint>
 
 namespace HCR
 {
@@ -10,12 +10,13 @@ namespace HCR
 		Left = 0u,
 		Right,
 		Middle,
-		Count, // Number of mouse buttons
+		Count,  // Number of mouse buttons
 	};
 
 	class Input final
 	{
 		friend class Window;
+
 	public:
 		Input( const Input& ) = delete;
 		Input& operator=( const Input& ) = delete;
@@ -58,9 +59,8 @@ namespace HCR
 		std::bitset<MouseButton::Count> m_mouseButtons{}, m_prevMouseButtons{};
 		int32_t m_mouseX = 0, m_mouseY = 0, m_mouseDeltaX = 0, m_mouseDeltaY = 0;
 		int16_t m_wheelDelta = 0;
-
 	};
 
 	inline Input& g_input = Input::Get();
 
-} // namespace HCR
+}  // namespace HCR

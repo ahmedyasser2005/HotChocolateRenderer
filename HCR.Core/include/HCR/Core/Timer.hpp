@@ -29,4 +29,4 @@ namespace HCR
 		std::chrono::steady_clock::time_point m_lastTime = std::chrono::steady_clock::now();
 	};
 
-} // namespace HCR
+}  // namespace HCR

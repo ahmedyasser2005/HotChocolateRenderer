@@ -37,9 +37,8 @@ namespace HCR
 		HWND m_hwnd = nullptr;
 		uint32_t m_width = 0u;
 		uint32_t m_height = 0u;
-
 	};
 
 	inline Window& g_window = Window::Get();
 
-} // namespace HCR
+}  // namespace HCR
