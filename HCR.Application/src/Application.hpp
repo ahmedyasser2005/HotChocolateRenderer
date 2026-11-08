@@ -19,7 +19,6 @@ namespace HCR
 	private:
 		void Update( const float dt ) noexcept;
 		void Render() noexcept;
-
 	};
 
-} // namespace HCR
+}  // namespace HCR

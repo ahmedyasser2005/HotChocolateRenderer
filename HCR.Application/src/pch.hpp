@@ -1,35 +1,32 @@
 #pragma once
 
+#include "HCR/Core/Win32API.hpp"
+
 // Standard Libs
-#include <iostream>
-#include <print>
+#include <algorithm>
+#include <array>
+#include <bitset>
+#include <cassert>
+#include <chrono>
+#include <cmath>
+#include <concepts>
+#include <cstdint>
+#include <execution>
+#include <filesystem>
 #include <format>
+#include <fstream>
+#include <functional>
+#include <iostream>
+#include <memory>
+#include <numeric>
+#include <optional>
+#include <print>
+#include <span>
+#include <stdexcept>
 #include <string>
 #include <string_view>
-#include <span>
-#include <cstdint>
-#include <functional>
-#include <memory>
-#include <chrono>
-#include <stdexcept>
-#include <bitset>
-#include <array>
-#include <vector>
-#include <algorithm>
-#include <utility>
-#include <cmath>
-#include <optional>
-#include <filesystem>
-#include <unordered_map>
 #include <system_error>
-#include <concepts>
-#include <execution>
-#include <numeric>
+#include <unordered_map>
+#include <utility>
 #include <variant>
-#include <assert.h>
-
-//#ifdef _DEBUG
-//[[maybe_unused]] inline constexpr auto IS_DEBUG = true;
-//#else
-//[[maybe_unused]] inline constexpr auto IS_DEBUG = false;
-//#endif
+#include <vector>
